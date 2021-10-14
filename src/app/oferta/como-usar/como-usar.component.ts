@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Params } from '@angular/router';
 import { OfertasService } from '../../ofertas.service';
 
 
@@ -15,12 +15,15 @@ export class ComoUsarComponent implements OnInit {
   constructor(private route: ActivatedRoute, private ofertasService: OfertasService) { }
 
   ngOnInit(): void {
-   console.log(this.route.parent?.snapshot.params['id'])
-   this.ofertasService.getComoUsarOfertaPorId(this.route.parent?.snapshot.params['id'])
+  //  console.log(this.route.parent?.snapshot.params['id'])
+
+  this.route.parent?.params.subscribe((parametro: Params) => {
+    this.ofertasService.getComoUsarOfertaPorId(parametro.id)
    .then((resposta:string) =>{
      this.comoUsar = resposta
-     console.log(this.comoUsar)
    })
+  })
+   
   }
 
 
