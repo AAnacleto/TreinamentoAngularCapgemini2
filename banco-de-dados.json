@@ -262,6 +262,20 @@
       "complemento": "uuuuuu",
       "formaPagamento": "debito",
       "id": 11
+    },
+    {
+      "endereco": "avenida Brasil",
+      "numero": "3000",
+      "complemento": "proximo a bla bla ",
+      "formaPagamento": "dinheiro",
+      "id": 12
+    },
+    {
+      "endereco": "rua das ninfas",
+      "numero": "5555",
+      "complemento": "qqqq",
+      "formaPagamento": "debito",
+      "id": 13
     }
   ]
 }

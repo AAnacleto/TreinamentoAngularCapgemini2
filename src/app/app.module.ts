@@ -41,8 +41,8 @@ import { OrdemCompraSucessoComponent } from './ordem-compra-sucesso/ordem-compra
     BrowserModule,
     AppRoutingModule,
     HttpClientModule,
+    FormsModule,
     RouterModule.forRoot(ROUTES),
-    FormsModule
   ],
   providers: [],
   bootstrap: [AppComponent]
