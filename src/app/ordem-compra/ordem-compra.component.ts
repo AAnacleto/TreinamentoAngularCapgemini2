@@ -3,12 +3,13 @@ import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { OrdemCompraService } from '../ordem-compra.service'
 import { Pedido } from '../shared/pedido.model'
 import { CarrinhoService } from '../carrinho.service'
+import { ItemCarrinho } from '../shared/itemCarrinho.model';
 
 @Component({
   selector: 'app-ordem-compra',
   templateUrl: './ordem-compra.component.html',
   styleUrls: ['./ordem-compra.component.css'],
-  providers: [ OrdemCompraService , CarrinhoService ]
+  providers: [ OrdemCompraService]
 })
 export class OrdemCompraComponent implements OnInit {
   
@@ -20,13 +21,16 @@ export class OrdemCompraComponent implements OnInit {
   })
   
   idPedidoCompra!: number;
+  itenscarrinho: ItemCarrinho [] = []
 
   constructor(private ordemCompraService: OrdemCompraService,
-              private carrinhoService: CarrinhoService    
+              public carrinhoService: CarrinhoService    
     ) { }
 
   ngOnInit() {
-    this.carrinhoService.exibirItens()
+    this.itenscarrinho = this.carrinhoService.exibirItens()
+    console.log(this.itenscarrinho);
+    
   }
 
   public confirmarCompra(): void {
@@ -38,20 +42,35 @@ export class OrdemCompraComponent implements OnInit {
       this.formulario.get('formaPagamento')?.markAsTouched()
     } else {
 
+      if(this.carrinhoService.exibirItens().length === 0){
+        alert('você não selecionou nenhum item')
+      } else {
       let pedido: Pedido = new Pedido(
        this.formulario.value.endereco,
        this.formulario.value.numero,
        this.formulario.value.complemento,
        this.formulario.value.formaPagamento,
+       this.carrinhoService.exibirItens()
       )
 
       this.ordemCompraService.efetivarCompra(pedido)
       .subscribe((idPedido: number) => {
        this.idPedidoCompra = idPedido
+       this.carrinhoService.limparCarrinho()
+
       })
       console.log(this.idPedidoCompra); 
       
       console.log('formulario esta valido!!!!')
+      }
     }
+  }
+
+  public adicionar (item: ItemCarrinho): void {
+    this.carrinhoService.adicionarQuantidade(item)
+  }
+
+  public retirar(item: ItemCarrinho): void {
+    this.carrinhoService.retirarQuantidade(item)
   }
 }

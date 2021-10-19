@@ -2,7 +2,7 @@ import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { HttpClientModule } from '@angular/common/http'
 import { RouterModule } from '@angular/router';
-
+import { CarrinhoService } from './carrinho.service';
 import { ROUTES } from './app.routes'; 
 
 import { AppRoutingModule } from './app-routing.module';
@@ -47,7 +47,9 @@ import { ReactiveFormsModule } from '@angular/forms';
     ReactiveFormsModule,
     RouterModule.forRoot(ROUTES),
   ],
-  providers: [],
+  providers: [
+    CarrinhoService
+  ],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
